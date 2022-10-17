@@ -6,12 +6,16 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using System.Xml.Linq;
 
 namespace playerapi.updates
 {
     public static class updates
     {
+        private const string BlobPropertiesUrlPrefix = "https://collectionplayer.blob.core.windows.net/binaries?restype=container&comp=list&include=metadata&prefix=";
+
         [FunctionName("updates")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
